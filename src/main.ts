@@ -15,7 +15,8 @@ async function run() {
       noInstall: await core.getInput("no-install"),
       noCache: await core.getInput("no-cache"),
       actionsCacheFolder: await core.getInput("actions-cache-folder"),
-      updateTags: await core.getInput("update-tags")
+      updateTags: await core.getInput("update-tags"),
+      cacheKey: await core.getInput("cache-key")
     };
 
     let emsdkFolder;
@@ -25,7 +26,7 @@ async function run() {
       emsdkFolder = await tc.find('emsdk', emArgs.version, os.arch());
     }
 
-    const cacheKey = `${emArgs.version}-${os.arch()}-main`;
+    const cacheKey = emArgs.cacheKey || `${emArgs.version}-${os.arch()}-main`;
     if (emArgs.actionsCacheFolder && process.env.GITHUB_WORKSPACE) {
       const fullCachePath = path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder);
       try {

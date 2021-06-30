@@ -52,14 +52,15 @@ function run() {
                 noInstall: yield core.getInput("no-install"),
                 noCache: yield core.getInput("no-cache"),
                 actionsCacheFolder: yield core.getInput("actions-cache-folder"),
-                updateTags: yield core.getInput("update-tags")
+                updateTags: yield core.getInput("update-tags"),
+                cacheKey: yield core.getInput("cache-key")
             };
             let emsdkFolder;
             let foundInCache = false;
             if (emArgs.version !== "latest" && emArgs.version !== "tot" && emArgs.noCache === "false" && !emArgs.actionsCacheFolder) {
                 emsdkFolder = yield tc.find('emsdk', emArgs.version, os.arch());
             }
-            const cacheKey = `${emArgs.version}-${os.arch()}-main`;
+            const cacheKey = emArgs.cacheKey || `${emArgs.version}-${os.arch()}-main`;
             if (emArgs.actionsCacheFolder && process.env.GITHUB_WORKSPACE) {
                 const fullCachePath = path.join(process.env.GITHUB_WORKSPACE, emArgs.actionsCacheFolder);
                 try {

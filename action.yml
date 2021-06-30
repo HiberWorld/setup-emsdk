@@ -17,6 +17,9 @@ inputs:
   update-tags:
     description: "Update tags before installing a version"
     default: false
+  cache-key:
+    description: "Update tags before installing a version"
+    default: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
